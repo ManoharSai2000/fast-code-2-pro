@@ -24,12 +24,9 @@ void batch_norm_op_forward(batch_norm_op *op)
     register int offset = 0;
     for (p = 0; p < op->batchsize; p++)
     {
-#pragma omp parallel for
         for (i = 0; i < op->units; i++)
-            // op->avg[i] += input[offset++];
-            op->avg[i] += input[p * op->units + i];
+            op->avg[i] += input[offset++];
     }
-#pragma omp parallel for
     for (i = 0; i < op->units; i++)
         op->avg[i] /= op->batchsize;
 
@@ -37,15 +34,12 @@ void batch_norm_op_forward(batch_norm_op *op)
     offset = 0;
     for (p = 0; p < op->batchsize; p++)
     {
-#pragma omp parallel for
         for (i = 0; i < op->units; i++)
         {
-            // register float tmp = input[offset++] - op->avg[i];
-            register float tmp = input[p * op->units + i] - op->avg[i];
+            register float tmp = input[offset++] - op->avg[i];
             op->var[i] += tmp * tmp;
         }
     }
-#pragma omp parallel for
     for (i = 0; i < op->units; i++)
         op->var[i] /= op->batchsize;
 
@@ -54,17 +48,12 @@ void batch_norm_op_forward(batch_norm_op *op)
     offset = 0;
     for (p = 0; p < op->batchsize; p++)
     {
-#pragma omp parallel for
         for (i = 0; i < op->units; i++)
         {
             // calculate normalized x
-            // op->x_norm[offset] = (input[offset] - op->avg[i]) / sqrt(op->var[i] + EPSILON);
-            // // scale & shift
-            // output[offset] = gamma[i] * op->x_norm[offset] + beta[i];
-            // offset++;
-            op->x_norm[i + p * op->units] = (input[i + p * op->units] - op->avg[i]) / sqrt(op->var[i] + EPSILON);
+            op->x_norm[offset] = (input[offset] - op->avg[i]) / sqrt(op->var[i] + EPSILON);
             // scale & shift
-            output[i + p * op->units] = gamma[i] * op->x_norm[i + p * op->units] + beta[i];
+            output[offset] = gamma[i] * op->x_norm[offset] + beta[i];
             offset++;
         }
     }

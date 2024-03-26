@@ -4,7 +4,7 @@ CC=gcc
 TARGET=alexnet
 OBJDIR=./obj/
 SRC=./src/
-CLFAGS=-w -lm -lpthread 
+CLFAGS=-w -lm -lpthread -fopenmp
 
 LAYER_OBJ=activation_layer.o batchnorm_layer.o convolution_layer.o dropout_layer.o maxpooling_layer.o fc_layer.o
 LAYER_OBJS = $(addprefix $(OBJDIR), $(LAYER_OBJ))
