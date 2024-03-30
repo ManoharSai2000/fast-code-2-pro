@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include <math.h>
 #include "batchnorm_layer.h"
-#include <omp.h>
 
 void batch_norm_op_forward(batch_norm_op *op)
 {

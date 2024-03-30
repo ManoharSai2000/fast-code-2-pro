@@ -8,7 +8,6 @@
 #include <pthread.h>
 #include "maxpooling_layer.h"
 #include <string.h>
-#include <omp.h>
 
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))

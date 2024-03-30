@@ -1,3 +1,7 @@
 temp.weights
 temp.weights1
 .vscode/
+others/
+obj/
+images/
+train_transformed/

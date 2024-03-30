@@ -152,7 +152,6 @@ image load_image(char *filename, int W, int H, int channels, int is_h_flip)
         printf("Error! Can't load image %s! \n", filename);
         exit(0);
     }
-    printf("Image loaded: %s\n", filename);
     if (channels)
     {
         c = channels;
@@ -180,7 +179,6 @@ image load_image(char *filename, int W, int H, int channels, int is_h_flip)
     if (is_h_flip)
         horizontal_flip(&img);
 
-    printf("exited load_image\n");
     return img;
 }
 
@@ -233,15 +231,12 @@ void get_next_batch(int n, float *X, int *Y,
      *      X   [n,c,h,w]
      *      Y   [n]
      * */
-    printf("hi");
     image img;
     make_image(&img, w, h, c);
     int label, idx;
     char imgpath[256];
-    printf("char");
     int imagesize = w * h * c;
-    printf("\n%d\n", imagesize);
-    printf("begin loop");
+
     for (int i = 0; i < n; i++)
     {
         if (feof(fp))
@@ -249,14 +244,8 @@ void get_next_batch(int n, float *X, int *Y,
 
         fscanf(fp, "%d %s", &label, imgpath);
 
-        printf("Image Path: %s\n", imgpath);
-
         Y[i] = label;
-        printf("\n%d\n", label);
         img = load_image(imgpath, w, h, c, 0);
-        printf("Image Loaded\n");
         memcpy(X + i * imagesize, img.data, imagesize * sizeof(float));
-        printf("Image Copied\n");
     }
-    printf("end loop");
 }

@@ -8,7 +8,6 @@
 #include <pthread.h>
 #include "activation_layer.h"
 #include <string.h>
-#include <omp.h>
 
 typedef struct nonlinear_args
 {

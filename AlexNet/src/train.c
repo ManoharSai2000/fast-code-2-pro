@@ -607,39 +607,24 @@ void alexnet_train(alexnet *net, int epochs)
 
     struct timespec start, finish;
     float duration;
+    float avg_duration=0;
+    
     for (int e = 0; e < epochs; e++)
     {
         printf("-----------------------------%d---------------------------------\n", e + 1);
-        // char line[100]; // Assuming a maximum line length of 100 characters
-        // if (fgets(line, sizeof(line), fp) != NULL)
-        // {
-        //     printf("%s", line);
-        // }
-        // else
-        // {
-        //     printf("File is empty.\n");
-        // }
-        //
-        // >>>>>load data<<<<<
-        // batch_X <-- images
-        // batch_Y <-- labels
-        //
-        // printf("hi\n");
-        // printf("%s",fp[0]);
         get_next_batch(net->batchsize, net->input, batch_Y,
                        net->conv1.in_w, net->conv1.in_h, net->conv1.in_channels, net->fc3.out_units, fp);
-        printf("got batch");
         clock_gettime(CLOCK_MONOTONIC, &start);
         forward_alexnet(net);
-        printf("forward_alexnet\n");
         clock_gettime(CLOCK_MONOTONIC, &finish);
         duration = (finish.tv_sec - start.tv_sec);
         duration += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
+        avg_duration += duration;
         printf("forward_alexnet duration: %.4fs \n", duration);
 
         for (int i = 0; i < net->batchsize; i++)
             preds[i] = argmax(net->output + i * net->fc3.out_units, net->fc3.out_units);
-
+        
 #ifdef SHOW_PREDCITION_DETAIL
         printf("pred[ ");
         for (int i = 0; i < net->batchsize; i++)
@@ -660,6 +645,8 @@ void alexnet_train(alexnet *net, int epochs)
         printf("-----------------------------%d---------------------------------\n", e + 1);
     }
     printf(">>>>>>>>>>>>>>>>>>>>>>>>>>> training end >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n");
+
+    printf("Final forward duration: %.4fs \n", avg_duration/epochs);
 
     fclose(fp);
     free(net->input);

@@ -24,12 +24,12 @@ void batch_norm_op_forward(batch_norm_op *op)
     register int offset = 0;
     for (p = 0; p < op->batchsize; p++)
     {
-#pragma omp parallel for
+//#pragma omp parallel for
         for (i = 0; i < op->units; i++)
             // op->avg[i] += input[offset++];
             op->avg[i] += input[p * op->units + i];
     }
-#pragma omp parallel for
+//#pragma omp parallel for
     for (i = 0; i < op->units; i++)
         op->avg[i] /= op->batchsize;
 
@@ -37,7 +37,7 @@ void batch_norm_op_forward(batch_norm_op *op)
     offset = 0;
     for (p = 0; p < op->batchsize; p++)
     {
-#pragma omp parallel for
+//#pragma omp parallel for
         for (i = 0; i < op->units; i++)
         {
             // register float tmp = input[offset++] - op->avg[i];
@@ -45,7 +45,7 @@ void batch_norm_op_forward(batch_norm_op *op)
             op->var[i] += tmp * tmp;
         }
     }
-#pragma omp parallel for
+//#pragma omp parallel for
     for (i = 0; i < op->units; i++)
         op->var[i] /= op->batchsize;
 
@@ -54,7 +54,7 @@ void batch_norm_op_forward(batch_norm_op *op)
     offset = 0;
     for (p = 0; p < op->batchsize; p++)
     {
-#pragma omp parallel for
+//#pragma omp parallel for
         for (i = 0; i < op->units; i++)
         {
             // calculate normalized x

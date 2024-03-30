@@ -58,6 +58,40 @@ void matrix_multiply(const float *a, const float *b, float *c, const int M, cons
 //
 // Todo: Explore more efficient matrix_multiply algorithm
 //
+// void matrix_multiply(const float *a, const float *b, float *c, const int M, const int N, const int K)
+// {
+//     /**
+//      * matrix multiply, c = a * b
+//      *
+//      * Input:
+//      * a    [M,N]
+//      * b    [N,K]
+//      * Output:
+//      * c    [M,K]
+//      * */
+//     register int i, j, p;
+//     register float *a_ptr = a;
+
+//     // fix this TODO
+//     // printf("M=%d, N=%d, K=%d\n", M, N, K);
+// //#pragma omp parallel for num_threads(1)
+
+//     for (i = 0; i < M; i++)
+//     {
+//         register float *b_ptr = b;
+//         register float *c_ptr = c + i * K;
+//         // #pragma omp parallel for reduction(+ : c_ptr[ : K]) collapse(2)
+//         for (j = 0; j < N; j++)
+//         {
+//             register float apart = a_ptr[i * N + j];
+//             if (apart < 0.00001 && apart > (0 - 0.00001))
+//                 continue;
+// //#pragma omp parallel for num_threads(1)
+//             for (p = 0; p < K; p++)
+//                 c_ptr[p] += b_ptr[j * K + p] * apart;
+//         }
+//     }
+// }
 void matrix_multiply(const float *a, const float *b, float *c, const int M, const int N, const int K)
 {
     /**
@@ -71,22 +105,17 @@ void matrix_multiply(const float *a, const float *b, float *c, const int M, cons
      * */
     register int i, j, p;
     register float *a_ptr = a;
-
-    // fix this TODO
-    // printf("M=%d, N=%d, K=%d\n", M, N, K);
     for (i = 0; i < M; i++)
     {
         register float *b_ptr = b;
-        register float *c_ptr = c + i * K;
-        // #pragma omp parallel for reduction(+ : c_ptr[ : K]) collapse(2)
         for (j = 0; j < N; j++)
         {
-            register float apart = a_ptr[i * N + j];
+            register float apart = *(a_ptr++);
             if (apart < 0.00001 && apart > (0 - 0.00001))
                 continue;
-#pragma omp parallel for num_threads(1)
+            register float *c_ptr = c + i * K;
             for (p = 0; p < K; p++)
-                c_ptr[p] += b_ptr[j * K + p] * apart;
+                *(c_ptr++) += *(b_ptr++) * apart;
         }
     }
 }
@@ -103,7 +132,7 @@ matrix_transpose(float *x, int m, int n)
     float *tmp = (float *)malloc(m * n * sizeof(float));
     register int i, j;
     register float *ptr = x;
-#pragma omp parallel for collapse(2)
+//#pragma omp parallel for collapse(2)
 
     for (i = 0; i < m; i++)
     {
