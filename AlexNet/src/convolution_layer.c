@@ -21,48 +21,85 @@ typedef struct conv_args{
     short ed_tunits;
 } conv_args;
 
-static void img2col(const float *img, float *col, const conv_op *op)
-{
-    /**
-     * Output
-     *      col[ikk][owoh]
-     * */
+#include <omp.h> // Include OpenMP header
 
-    //
-    // Todo: simplify the code
-    //
-    register int input_offset;
-    register int iwih = op->in_w*op->in_h;
-    register int kk   = op->kernel_size* op->kernel_size;
-    register int ikk  = op->in_channels * kk;
-    register float *input = img;
-    register float *x_col = col;
-    for (register unsigned short in_c = 0; in_c < op->in_channels; in_c++)
-    {
-        register int x_col_offset = in_c * kk;
-        for (register int st_x = 0; st_x < op->out_w * op->stride; st_x += op->stride)
-        {
-            for (register int st_y = 0; st_y < op->out_h * op->stride; st_y += op->stride, x_col_offset += ikk)
-            {
-                for (register unsigned short j = 0; j < op->kernel_size; j++)
-                {
-                    for (register unsigned short i = 0; i < op->kernel_size; i++, x_col_offset++)
-                    {
-                        if (!(st_x+i <op->in_w) | !(st_y+j <op->in_h))
-                        {
+static void img2col(const float *img, float *col, const conv_op *op) {
+    int iwih = op->in_w * op->in_h;
+    int kk = op->kernel_size * op->kernel_size;
+    const float *input = img;
+    float *x_col = col;
+
+    // Parallelize the outer loops with OpenMP
+    #pragma omp parallel for collapse(3)
+    for (int in_c = 0; in_c < op->in_channels; in_c++) {
+        for (int st_x = 0; st_x < op->out_w * op->stride; st_x += op->stride) {
+            for (int st_y = 0; st_y < op->out_h * op->stride; st_y += op->stride) {
+                int x_col_offset = in_c * kk + (st_y / op->stride) * op->out_w * kk + (st_x / op->stride) * kk;
+                for (int j = 0; j < op->kernel_size; j++) {
+                    for (int i = 0; i < op->kernel_size; i++) {
+                        int input_offset; // Declare input_offset here
+                        if (!(st_x + i < op->in_w) || !(st_y + j < op->in_h)) {
                             x_col[x_col_offset] = 0;
-                            continue;
+                        } else {
+                            input_offset = (st_x + i) + (st_y + j) * op->in_w + in_c * iwih;
+                            x_col[x_col_offset] = input[input_offset];
                         }
-
-                        input_offset = (st_x+i) + (st_y+j) * op->in_w + in_c * iwih;
-                        x_col[x_col_offset] = input[input_offset];
+                        x_col_offset++;
                     }
                 }
             }
         }
-        ikk += kk;
     }
 }
+
+// static void img2col(const float *img, float *col, const conv_op *op)
+// {
+//     /**
+//      * Output
+//      *      col[ikk][owoh]
+//      * */
+
+//     //
+//     // Todo: simplify the code
+//     //
+//     register int input_offset;
+//     register int iwih = op->in_w*op->in_h;
+//     register int kk   = op->kernel_size* op->kernel_size;
+//     register int ikk  = op->in_channels * kk;
+//     register float *input = img;
+//     register float *x_col = col;
+//     //#pragma omp parallel for private(input_offset)
+//     #pragma omp parallel for collapse(3) private(input_offset)
+
+//     for (register unsigned short in_c = 0; in_c < op->in_channels; in_c++)
+//     {
+//         register int x_col_offset = in_c * kk;
+//         for (register int st_x = 0; st_x < op->out_w * op->stride; st_x += op->stride)
+//         {
+//             for (register int st_y = 0; st_y < op->out_h * op->stride; st_y += op->stride)
+//             {
+//                 for (register unsigned short j = 0; j < op->kernel_size; j++)
+//                 {
+//                     for (register unsigned short i = 0; i < op->kernel_size; i++)
+//                     {
+//                         if (!(st_x+i <op->in_w) | !(st_y+j <op->in_h))
+//                         {
+//                             x_col[x_col_offset] = 0;
+//                             continue;
+//                         }
+
+//                         input_offset = (st_x+i) + (st_y+j) * op->in_w + in_c * iwih;
+//                         x_col[x_col_offset] = input[input_offset];
+//                         x_col_offset++;
+
+//                     }
+//                 }
+//                 x_col_offset += ikk;
+//             }
+//         }
+//         ikk += kk;
+//     }
+// }
 
 static void col2img(const float *col, float *img, const conv_op *op)
 {

@@ -5,7 +5,7 @@
 //
 #include <stdlib.h>
 #include <math.h>
-//#include <pthread.h>
+#include <pthread.h>
 #include "activation_layer.h"
 #include <string.h>
 #include <omp.h>
@@ -26,7 +26,7 @@ static void *pthread_relu_op_forward(void *argv)
 
     register float *input = nargs.op->input + nargs.batch_id * (nargs.op->units);
     register float *output = nargs.op->output + nargs.batch_id * (nargs.op->units);
-//#pragma omp parallel for
+#pragma omp parallel for
     for (register int i = 0; i < (nargs.op->units); i++)
     {
         if (input[i] > 0)
@@ -71,7 +71,7 @@ void relu_op_backward(nonlinear_op *op)
 
 void sigmoid_op_forward(nonlinear_op *op)
 {
-//#pragma omp parallel for
+#pragma omp parallel for
     for (int i = 0; i < (op->units) * (op->batchsize); i++)
         op->output[i] = 1.0 / (1.0 + exp(0.0 - op->input[i]));
 }
@@ -97,11 +97,11 @@ void softmax_op_forward(nonlinear_op *op)
     for (int p = 0; p < op->batchsize; p++)
     {
         register float esum = 0;
-//#pragma omp parallel for reduction(+ : esum)
+#pragma omp parallel for reduction(+ : esum)
         for (int i = 0; i < op->units; i++)
             // esum += exp(*(input++));
             esum += exp(input[i + p * op->units]);
-//#pragma omp parallel for
+#pragma omp parallel for
         for (int i = 0; i < op->units; i++)
             // *(output++) = exp(op->input[i + p * op->units]) / esum;
             output[i + p * op->units] = exp(op->input[i + p * op->units]) / esum;

@@ -29,6 +29,7 @@ static void* pthread_fc_op_forward(void *argv)
     memcpy(&args, (fc_args *)argv, sizeof(fc_args));
     short internal   = args.ed_tunits - args.st_tunits;
     float *t_weights = (float *)malloc(internal * (args.op->in_units) * sizeof(float));
+    // #pragma omp parallel for
     for (int j = 0; j < args.op->in_units; j++)
     {   
         memcpy((void *)(t_weights+j*internal), 

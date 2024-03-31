@@ -8,7 +8,7 @@
 #include <pthread.h>
 #include "maxpooling_layer.h"
 #include <string.h>
-#include <omp.h>
+
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
 
@@ -34,12 +34,10 @@ static void *pthread_mp_op_forward(void *argv)
     register int iwih = mp.op->in_w * mp.op->in_h;
     register int owoh = mp.op->out_w * mp.op->out_h;
 
-    #pragma omp parallel for shared(iwih,owoh,pool_size,strides,channels,input,output) private(input_offset,output_offset,o_x,o_y)
     for (register int c = 0; c < channels; c++)
     {
 
         o_y = 0;
-        //#pragma omp parallel for shared(o_y,c,iwih,owoh,pool_size,strides,channels,input,output) private(input_offset,output_offset,o_x)
         for (int j = 0; j < mp.op->in_h - strides + 1; j += strides)
         {
             o_x = 0;

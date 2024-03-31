@@ -20,7 +20,7 @@ void dropout(float *x, float prob, int units)
  * Output:
  *      x   [units]
  * */
-//#pragma omp parallel for
+//#pragma omp parallel for shared(x, prob, units)
     for (int i = 0; i < units; i++)
     {
         if (rand() % 100 < prob * 100)

@@ -21,19 +21,19 @@ def convert_jpeg_to_jpg(input_file, output_file):
 # output_file = "output.jpeg"
 # convert_jpeg_to_jpg(input_file, output_file)
 
-path = "/home/malapati/Storage/diffusion-fc2/AlexNet/train_transformed"
+path = "/home/ubuntu/fc2/train_transformed"
 
 images = sorted(
     glob.glob(
-        "/home/malapati/Storage/diffusion-fc2/AlexNet/train_transformed/*"
+        "/home/ubuntu/fc2/train_transformed/*"
     )
 )
 f = open("data.txt", "w")
 for classe in [0]:
-    files = sorted(glob.glob("/home/malapati/Storage/diffusion-fc2/AlexNet/train_transformed/*"))
+    files = sorted(glob.glob("/home/ubuntu/fc2/train_transformed/*"))
 
     out_path = (
-        "/home/malapati/Storage/diffusion-fc2/AlexNet/images/0"
+        "/home/ubuntu/fc2/fast-code-2-pro/AlexNet/images/0"
         #+ classe.split("/")[-1]
         + "/"
     )
