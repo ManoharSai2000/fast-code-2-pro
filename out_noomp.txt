@@ -1,0 +1,152 @@
+Data directory: data
+Loading testing set... before loadImages
+Start loadImages
+rows, cols, num_images_: 224 224 400
+loadImages doneloadLabels doneLoaded.
+Testing...
+Conv_Kernel time: 1.57942ms
+Pool_Kernel time: 0.11616ms
+Conv_Kernel time: 2.95037ms
+Pool_Kernel time: 0.059968ms
+Conv_Kernel time: 1.23725ms
+Conv_Kernel time: 5.16048ms
+Conv_Kernel time: 3.54304ms
+Pool_Kernel time: 0.027808ms
+FC_Kernel time: 0.087552ms
+FC_Kernel time: 0.026624ms
+Per Iteration Time: 306306
+Conv_Kernel time: 1.42269ms
+Pool_Kernel time: 0.107264ms
+Conv_Kernel time: 2.86717ms
+Pool_Kernel time: 0.05504ms
+Conv_Kernel time: 1.20118ms
+Conv_Kernel time: 5.02259ms
+Conv_Kernel time: 3.44451ms
+Pool_Kernel time: 0.026656ms
+FC_Kernel time: 0.083456ms
+FC_Kernel time: 0.026624ms
+Per Iteration Time: 130076
+Conv_Kernel time: 1.42541ms
+Pool_Kernel time: 0.10544ms
+Conv_Kernel time: 2.86509ms
+Pool_Kernel time: 0.060384ms
+Conv_Kernel time: 1.2033ms
+Conv_Kernel time: 5.02374ms
+Conv_Kernel time: 3.4552ms
+Pool_Kernel time: 0.026048ms
+FC_Kernel time: 0.083552ms
+FC_Kernel time: 0.026624ms
+Per Iteration Time: 156636
+Conv_Kernel time: 1.42141ms
+Pool_Kernel time: 0.106752ms
+Conv_Kernel time: 2.86355ms
+Pool_Kernel time: 0.057632ms
+Conv_Kernel time: 1.20163ms
+Conv_Kernel time: 5.02256ms
+Conv_Kernel time: 3.43037ms
+Pool_Kernel time: 0.02608ms
+FC_Kernel time: 0.083232ms
+FC_Kernel time: 0.026624ms
+Per Iteration Time: 153765
+Conv_Kernel time: 1.42211ms
+Pool_Kernel time: 0.10544ms
+Conv_Kernel time: 2.86038ms
+Pool_Kernel time: 0.056896ms
+Conv_Kernel time: 1.20198ms
+Conv_Kernel time: 5.02333ms
+Conv_Kernel time: 3.42218ms
+Pool_Kernel time: 0.026432ms
+FC_Kernel time: 0.084032ms
+FC_Kernel time: 0.02592ms
+Per Iteration Time: 153865
+Conv_Kernel time: 1.42336ms
+Pool_Kernel time: 0.11024ms
+Conv_Kernel time: 2.86435ms
+Pool_Kernel time: 0.059616ms
+Conv_Kernel time: 1.19955ms
+Conv_Kernel time: 5.02208ms
+Conv_Kernel time: 3.45005ms
+Pool_Kernel time: 0.027936ms
+FC_Kernel time: 0.084448ms
+FC_Kernel time: 0.026624ms
+Per Iteration Time: 152544
+Conv_Kernel time: 1.42182ms
+Pool_Kernel time: 0.107712ms
+Conv_Kernel time: 2.86381ms
+Pool_Kernel time: 0.058272ms
+Conv_Kernel time: 1.19856ms
+Conv_Kernel time: 5.02374ms
+Conv_Kernel time: 3.45011ms
+Pool_Kernel time: 0.024608ms
+FC_Kernel time: 0.083776ms
+FC_Kernel time: 0.02592ms
+Per Iteration Time: 151855
+Conv_Kernel time: 1.42109ms
+Pool_Kernel time: 0.108032ms
+Conv_Kernel time: 2.86429ms
+Pool_Kernel time: 0.05728ms
+Conv_Kernel time: 1.20048ms
+Conv_Kernel time: 5.01866ms
+Conv_Kernel time: 3.48147ms
+Pool_Kernel time: 0.027776ms
+FC_Kernel time: 0.08432ms
+FC_Kernel time: 0.025184ms
+Per Iteration Time: 152686
+Conv_Kernel time: 1.42368ms
+Pool_Kernel time: 0.111936ms
+Conv_Kernel time: 2.86941ms
+Pool_Kernel time: 0.058144ms
+Conv_Kernel time: 1.19904ms
+Conv_Kernel time: 5.02326ms
+Conv_Kernel time: 3.46522ms
+Pool_Kernel time: 0.027776ms
+FC_Kernel time: 0.086688ms
+FC_Kernel time: 0.026176ms
+Per Iteration Time: 169765
+Iteration 10/13Conv_Kernel time: 1.42157ms
+Pool_Kernel time: 0.109312ms
+Conv_Kernel time: 2.86349ms
+Pool_Kernel time: 0.054048ms
+Conv_Kernel time: 1.20118ms
+Conv_Kernel time: 5.02186ms
+Conv_Kernel time: 3.43859ms
+Pool_Kernel time: 0.027488ms
+FC_Kernel time: 0.083648ms
+FC_Kernel time: 0.026592ms
+Per Iteration Time: 157236
+Conv_Kernel time: 1.42227ms
+Pool_Kernel time: 0.109856ms
+Conv_Kernel time: 2.86515ms
+Pool_Kernel time: 0.057312ms
+Conv_Kernel time: 1.19968ms
+Conv_Kernel time: 5.02371ms
+Conv_Kernel time: 3.47171ms
+Pool_Kernel time: 0.028128ms
+FC_Kernel time: 0.084064ms
+FC_Kernel time: 0.024992ms
+Per Iteration Time: 157770
+Conv_Kernel time: 1.42131ms
+Pool_Kernel time: 0.109504ms
+Conv_Kernel time: 2.86925ms
+Pool_Kernel time: 0.059456ms
+Conv_Kernel time: 1.20013ms
+Conv_Kernel time: 5.0217ms
+Conv_Kernel time: 3.44067ms
+Pool_Kernel time: 0.03056ms
+FC_Kernel time: 0.084128ms
+FC_Kernel time: 0.026592ms
+Per Iteration Time: 163324
+Iteration 13/13Conv_Kernel time: 0.71888ms
+Pool_Kernel time: 0.063904ms
+Conv_Kernel time: 1.45203ms
+Pool_Kernel time: 0.030752ms
+Conv_Kernel time: 0.632864ms
+Conv_Kernel time: 2.5344ms
+Conv_Kernel time: 1.79536ms
+Pool_Kernel time: 0.021792ms
+FC_Kernel time: 0.084032ms
+FC_Kernel time: 0.025472ms
+Per Iteration Time: 68036
+Average Time: 159528
+13
+Testing done
