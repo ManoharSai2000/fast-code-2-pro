@@ -1,5 +1,0 @@
-- Change model params, num of convs, MLP, etc.
-- Get time taken/cycles per iteration/epoch
-- CPU optim
-- Change dataset from MNIST to ImageNet or similar
-- GPU optim
