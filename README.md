@@ -1,52 +1,27 @@
-# Neural Network in Pure C++
+# Parallelization of CNN - Alexnet: CPU and GPU
 
-Simple modular implementation of a neural network in C++ using only the STL. 
+## OpenMP
+The following files correspond to our OpenMP implementation of the network.
 
-### Installation
-Get the MNIST data set:
+```
+./AlexNet/src/activation_layer.c
+./AlexNet/src/batchnorm_layer.c
+./AlexNet/src/convolution_layer.c
+./AlexNet/src/dropout_layer.c
+./AlexNet/src/matrix.c
+./AlexNet/src/maxpooling_layer.c
+```
 
-```sh
-bash get_mnist.sh
+## CUDA
+The following files correspond to our CUDA implementation of the network.
 ```
-sudo apt install make
-sudo apt-get update && sudo apt-get install build-essential
-Generate your Makefile:
-```sh
-cmake -DCMAKE_BUILD_TYPE=Release
+./cuda/src/alexnet.cpp
 ```
-Make the code:
-```sh
-make
-```
-Run:
-```sh
-./neural_net_in_cpp data
-```
-The training should take about a minute and achieve ~97% accuracy.
-
-### Todos
- - [x] Fully connected;
- - [x] Sigmoid;
- - [x] Dropout;
- - [x] ReLU;
- - [ ] Tanh;
- - [ ] Leaky ReLU;
- - [ ] Batch normalization;
- - [x] Convolutional layers;
- - [x] Max pooling;
- - [ ] Other optimizers (Adam, RMSProp, etc);
- - [x] Learning rate scheduler;
- - [ ] Plots;
- - [ ] Filter visualization
- - [ ] CUDA?
+We run the following command to compile 
+```nvcc -x cu src/alexnet.cpp src/NetworkModel.cpp src/FullyConnected.cpp src/Sigmoid.cpp src/Dropout.cpp src/SoftmaxClassifier.cpp src/MNISTDataLoader.cpp src/ReLU.cpp src/Tensor.cpp src/Conv2d.cpp src/MaxPool.cpp src/LinearLRScheduler.cpp -I../include -o alexnet.x -arch=sm_70 -std=c++11```
 
 License
 ----
 
 MIT
 
-nvcc -x cu src/main.cpp src/NetworkModel.cpp src/FullyConnected.cpp src/Sigmoid.cpp src/Dropout.cpp src/SoftmaxClassifier.cpp src/MNISTDataLoader.cpp src/ReLU.cpp src/Tensor.cpp src/Conv2d.cpp src/MaxPool.cpp src/LinearLRScheduler.cpp -I../include -o main.x -arch=sm_70 -std=c++11
-
-TODO:
-Check Flatten
-Change the input_size, fc_layer_initialization_shape, fc_layers
